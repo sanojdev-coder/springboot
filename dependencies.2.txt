@@ -1,0 +1,52 @@
+What is missing (exactly, from your error)
+You need to add these packages (APKs) into .tmp/apks/:
+1) For readline.apk
+Missing shared library:
+
+so:libncursesw.so.6
+
+Provided by: libncursesw (Alpine ncurses split package)
+
+
+
+So you need:
+
+libncursesw-6.4_p20240420-r2.apk
+
+2) For coreutils-9.5-r2.apk
+Coreutils is split into subpackages, and you’re missing them:
+
+coreutils-env-9.5-r2.apk
+coreutils-fmt-9.5-r2.apk
+coreutils-sha512sum-9.5-r2.apk
+
+And coreutils also needs these runtime libs:
+
+so:libacl.so.1  → package acl
+so:libattr.so.1 → package attr
+so:libgmp.so.10 → package gmp
+so:libutmps.so.0.1 → package utmps-libs (sometimes named utmps/utmps-libs)
+
+So you need (versions from Alpine 3.20 main):
+
+acl-*.apk
+attr-*.apk
+gmp-*.apk
+utmps-libs-*.apk (or whichever package provides libutmps.so.0.1)
+
+3) For your ncurses-*
+You’re missing ncurses split libs:
+
+libformw
+libmenuw
+libpanelw
+libncursesw
+plus ncurses-terminfo-base
+
+So you need (matching your r2 build):
+
+libformw-6.4_p20240420-r2.apk
+libmenuw-6.4_p20240420-r2.apk
+libpanelw-6.4_p20240420-r2.apk
+libncursesw-6.4_p20240420-r2.apk (already listed above)
+ncurses-terminfo-base-6.4_p20240420-r2.apk
